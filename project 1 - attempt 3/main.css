@@ -36,3 +36,19 @@ body {
 .grid button.mine {
   background: red;
 }
+
+.grid button.revealed {
+  background: green;
+}
+
+.everything {
+  display: flex;
+}
+
+.top {
+  display: flex;
+}
+
+.middle {
+  display: flex;
+}
