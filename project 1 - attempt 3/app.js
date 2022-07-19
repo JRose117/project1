@@ -6,6 +6,8 @@ function init() {
   const height = 8
   const mines = 10
   let revealed = 0
+  let styleHeight = 100/height
+  let styleWidth = 100/width
   const cellCount = width * height
   const cells = []
   let gameCreated = false
@@ -15,6 +17,8 @@ function init() {
       const y = Math.ceil(ySum)
       const x = i % width
       const cell = document.createElement('button')
+      cell.style.height = `${styleHeight}%`
+      cell.style.width = `${styleWidth}%`
       cell.innerText = `x:${x},y:${y},i:${i}`
       cell.setAttribute('id', 'tile')
       cell.dataset.x = x
