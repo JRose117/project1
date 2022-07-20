@@ -1,17 +1,41 @@
 function init() {
 
   const grid = document.querySelector('.grid')
+  const minesLeftHTML = document.querySelector('.minesLeftTop')
+  const levelHTML = document.querySelector('.levelBottom')
+  const resetButton = document.querySelector('.restart button')
 
-  const width = 8
-  const height = 8
-  const mines = 10
+  let width
+  let height
+  let mines
+  let minesLeft = mines
   let revealed = 0
-  let styleHeight = 100/height
-  let styleWidth = 100/width
-  const cellCount = width * height
+  let gameRunning = 3
+  let resetTest = false
+  let level = 1
+  let flag = false
+  let cellCount
   const cells = []
   let gameCreated = false
+
   function createGrid() {
+    console.log(level)
+    if (level === 1){
+      width = 8
+      height = 8
+      mines = 10
+    } else if (level === 2){
+      width = 16
+      height = 16
+      mines = 40
+    } else {
+      width = 30
+      height = 16
+      mines = 99
+    }
+    cellCount = width * height
+    let styleHeight = 100 / height
+    let styleWidth = 100 / width
     for (let i = 0; i < cellCount; i++) {
       const ySum = ((i + 1) / (width)) - 1
       const y = Math.ceil(ySum)
@@ -27,6 +51,11 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell)
     }
+    minesLeft = mines
+    console.log(`minesLeft - > ${minesLeft}`)
+    console.log(`typeof minesLeft - > ${typeof minesLeft}`)
+    minesLeftHTML.innerHTML = minesLeft
+    levelHTML.innerHTML = level
   }
   createGrid()
   function createMines(position) {
@@ -34,27 +63,86 @@ function init() {
   }
 
   function runGame(event) {
-    if (gameCreated === false) {
-      const createMineArray = []
-      while (createMineArray.length != mines) {
-        const randomNumberMine = Math.floor(Math.random() * cells.length)
-        if (!createMineArray.includes(randomNumberMine)) {
-          createMineArray.push(randomNumberMine)
-          createMines(randomNumberMine)
-          cells[randomNumberMine].setAttribute('mine', true)
-        }
-        gameCreated = true
-      }
+    if (gameRunning === 2) {
+      console.log(`line 49, gameRunning -> ${gameRunning}`)
+      console.log(`gameRunning - > ${gameRunning}`)
+      return
     }
-    if (event.target.classList.contains('mine')) {
-      cells[event.target.value].style.background = 'red'
-      // console.log('lose')
-    } else {
-      checkArea(event)
+    else {
+      if (gameCreated === false) {
+        let createMineArray = []
+        while (createMineArray.length != mines) {
+          const randomNumberMine = Math.floor(Math.random() * cells.length)
+          if (!createMineArray.includes(randomNumberMine)) {
+            createMineArray.push(randomNumberMine)
+            createMines(randomNumberMine)
+            cells[randomNumberMine].setAttribute('mine', true)
+          }
+          gameCreated = true
+        }
+      }
+      if (resetTest === true) {
+        resetTest = false
+        return
+      }
+      if (event.target.classList.contains('flagged')) {
+        if (flag === true) {
+          cells[event.target.value].innerHTML = ''
+          event.target.classList.remove('flagged')
+          console.log(`minesLeft - > ${minesLeft}`)
+          console.log(`typeof minesLeft - > ${typeof minesLeft}`)
+          minesLeft += 1
+          console.log(`minesLeft - > ${minesLeft}`)
+          console.log(`typeof minesLeft - > ${typeof minesLeft}`)
+          minesLeftHTML.innerHTML = minesLeft
+          return
+        }
+        else {
+          return
+        }
+      }
+      else if (flag === true) {
+        if (event.target.classList.contains('revealed') || event.target.classList.contains('mine')) {
+          return
+        }
+        cells[event.target.value].innerHTML = '🚩'
+        event.target.classList.add('flagged')
+        console.log(`minesLeft - > ${minesLeft}`)
+        console.log(`typeof minesLeft - > ${typeof minesLeft}`)
+        minesLeft -= 1
+        console.log(`minesLeft - > ${minesLeft}`)
+        console.log(`typeof minesLeft - > ${typeof minesLeft}`)
+      }
+      else if (event.target.classList.contains('mine')) {
+        cells[event.target.value].style.background = 'red'
+        console.log('lose')
+        console.log(`line 93, gameRunning -> ${gameRunning}`)
+        gameRunning = 2
+        console.log(`line 95, gameRunning -> ${gameRunning}`)
+      } else if (event.target.classList.contains('restart')) {
+        return
+      } else {
+        checkArea(event)
+      } 
+      minesLeftHTML.innerHTML = minesLeft
     }
   }
+  function addFlag() {
+    if (gameRunning === 2) {
+      console.log(`line 106, gameRunning -> ${gameRunning}`)
+      return
+    }
+    else if (flag === true) {
+      flag = false
+      console.log(flag)
+    } else {
+      flag = true
+      console.log(flag)
+    }
 
+  }
   function checkArea(event) {
+    // console.log(`line 118 gameRunning - > ${gameRunning}`)
     if (event.target) {
       event.target.classList.add('revealed')
       revealed += 1
@@ -62,17 +150,17 @@ function init() {
       y = parseFloat(event.target.dataset.y)
     }
     else {
-      console.log(`event -> ${event}, cells[event] -> ${cells[event]}`)
+      // console.log(`event -> ${event}, cells[event] -> ${cells[event]}`)
       if (cells[event].classList.contains('revealed')) {
         return
       } else if (cells[event].classList.contains('mine')) {
         return
-      } else if(event){
+      } else if (event) {
         x = parseFloat(cells[event].dataset.x)
         y = parseFloat(cells[event].dataset.y)
         cells[event].classList.add('revealed')
         revealed += 1
-      } 
+      }
     }
 
     // console.log(`x --> ${x}`)
@@ -113,21 +201,24 @@ function init() {
       count += 1
     }
     if ((!(below >= height || right >= width)) && cells[belowRightCoordinate].classList.contains('mine')) {
-      console.log(`line 1 ${belowRightCoordinate}`)
-      console.log(`line 2 ${(!(below >= height || right >= width))}`)
+      // console.log(`line 1 ${belowRightCoordinate}`)
+      // console.log(`line 2 ${(!(below >= height || right >= width))}`)
       count += 1
     }
     // console.log(`count --> ${count}`)
     // console.log(`event ${event}`)
     cells[iFromCoordinates].innerText = count
     cells[iFromCoordinates].dataset.count = count
+    console.log(`cells.length-> ${cells.length}`)
+    console.log(`mines-> ${mines}`)
+    console.log(`revealed-> ${revealed}`)
     // if (event.target){
     // const countCheck = parseFloat(event.target.dataset.count)}
     // else{const countCheck = parseFloat(event.target.dataset.count)}
     // console.log(countCheck)
     if (count === 0) {
-      
-      
+
+
       // console.log(`topCoordinate --> ${topCoordinate}`)
       // console.log(`rightCoordinate --> ${rightCoordinate}`)
       // console.log(`leftCoordinate --> ${leftCoordinate}`)
@@ -163,15 +254,41 @@ function init() {
         // console.log(`belowLeftCoordinate --> ${belowLeftCoordinate}`)
         checkArea(belowLeftCoordinate)
       }
-      if (!(below >= height || right >= width)){
+      if (!(below >= height || right >= width)) {
         // console.log(`belowRightCoordinate --> ${belowRightCoordinate}`)
         checkArea(belowRightCoordinate)
       }
     }
   }
   const buttonSelected = document.querySelectorAll('#tile')
-
+  const flagButtonSelected = document.querySelector('#flag')
+  flagButtonSelected.addEventListener('click', addFlag)
 
   buttonSelected.forEach(div => div.addEventListener('click', runGame))
+
+  function reset() {
+    resetTest = true
+    gameCreated = false
+    gameRunning = 3
+    revealed = 0
+    flag = false
+    minesLeft = mines
+    minesLeftHTML.innerHTML = minesLeft
+    // runGame()
+    for (let i = 0; i < cellCount; i++) {
+      if (cells[i].classList.contains('flagged')) {
+        cells[i].classList.remove('flagged')
+      }
+      if (cells[i].classList.contains('mine')) {
+        cells[i].classList.remove('mine')
+      }
+      if (cells[i].classList.contains('revealed')) {
+        cells[i].classList.remove('revealed')
+      }
+      cells[i].innerHTML = ''
+      //  resetTIMER
+    }
+  }
+  resetButton.addEventListener('click', reset)
 }
 window.addEventListener('DOMContentLoaded', init)
