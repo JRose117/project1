@@ -4,10 +4,14 @@ function init() {
   const minesLeftHTML = document.querySelector('.minesLeftTop')
   const levelHTML = document.querySelector('.levelBottom')
   const resetButton = document.querySelector('.restart button')
+  const title = document.querySelector('.title')
+  const timerDisplay = document.querySelector('.timer')
 
   let width
   let height
   let mines
+  let timer
+  let timerRunning = false
   let minesLeft = mines
   let revealed = 0
   let gameRunning = 3
@@ -23,7 +27,7 @@ function init() {
     if (level === 1){
       width = 8
       height = 8
-      mines = 10
+      mines = 1
     } else if (level === 2){
       width = 16
       height = 16
@@ -52,8 +56,6 @@ function init() {
       grid.appendChild(cell)
     }
     minesLeft = mines
-    console.log(`minesLeft - > ${minesLeft}`)
-    console.log(`typeof minesLeft - > ${typeof minesLeft}`)
     minesLeftHTML.innerHTML = minesLeft
     levelHTML.innerHTML = level
   }
@@ -63,6 +65,7 @@ function init() {
   }
 
   function runGame(event) {
+    startTimer()
     if (gameRunning === 2) {
       console.log(`line 49, gameRunning -> ${gameRunning}`)
       console.log(`gameRunning - > ${gameRunning}`)
@@ -89,11 +92,7 @@ function init() {
         if (flag === true) {
           cells[event.target.value].innerHTML = ''
           event.target.classList.remove('flagged')
-          console.log(`minesLeft - > ${minesLeft}`)
-          console.log(`typeof minesLeft - > ${typeof minesLeft}`)
           minesLeft += 1
-          console.log(`minesLeft - > ${minesLeft}`)
-          console.log(`typeof minesLeft - > ${typeof minesLeft}`)
           minesLeftHTML.innerHTML = minesLeft
           return
         }
@@ -102,19 +101,16 @@ function init() {
         }
       }
       else if (flag === true) {
-        if (event.target.classList.contains('revealed') || event.target.classList.contains('mine')) {
+        if (event.target.classList.contains('revealed')) {
           return
         }
         cells[event.target.value].innerHTML = '🚩'
         event.target.classList.add('flagged')
-        console.log(`minesLeft - > ${minesLeft}`)
-        console.log(`typeof minesLeft - > ${typeof minesLeft}`)
         minesLeft -= 1
-        console.log(`minesLeft - > ${minesLeft}`)
-        console.log(`typeof minesLeft - > ${typeof minesLeft}`)
       }
       else if (event.target.classList.contains('mine')) {
-        cells[event.target.value].style.background = 'red'
+        cells[event.target.value].innerHTML = '💣'
+        cells[event.target.value].style.fontSize = '50px'
         console.log('lose')
         console.log(`line 93, gameRunning -> ${gameRunning}`)
         gameRunning = 2
@@ -129,23 +125,21 @@ function init() {
   }
   function addFlag() {
     if (gameRunning === 2) {
-      console.log(`line 106, gameRunning -> ${gameRunning}`)
       return
     }
     else if (flag === true) {
       flag = false
-      console.log(flag)
     } else {
-      flag = true
-      console.log(flag)
+      flag = true    
     }
 
   }
   function checkArea(event) {
     // console.log(`line 118 gameRunning - > ${gameRunning}`)
     if (event.target) {
+      if (!event.target.classList.contains('revealed')){
       event.target.classList.add('revealed')
-      revealed += 1
+      revealed += 1}
       x = parseFloat(event.target.dataset.x)
       y = parseFloat(event.target.dataset.y)
     }
@@ -158,8 +152,9 @@ function init() {
       } else if (event) {
         x = parseFloat(cells[event].dataset.x)
         y = parseFloat(cells[event].dataset.y)
+        if (!cells[event].classList.contains('revealed')){
         cells[event].classList.add('revealed')
-        revealed += 1
+        revealed += 1}
       }
     }
 
@@ -209,9 +204,15 @@ function init() {
     // console.log(`event ${event}`)
     cells[iFromCoordinates].innerText = count
     cells[iFromCoordinates].dataset.count = count
-    console.log(`cells.length-> ${cells.length}`)
-    console.log(`mines-> ${mines}`)
-    console.log(`revealed-> ${revealed}`)
+    if(cells.length - mines === revealed) {
+      console.log('won')
+      title.innerHTML = 'YOU WON 🎉'
+      resetButton.innerHTML = '⏩'
+      resetButton.style.transform = 'rotate(0deg)'
+      level+=1
+      levelHTML.innerHTML = level
+      clearTimeout(timer)
+    }
     // if (event.target){
     // const countCheck = parseFloat(event.target.dataset.count)}
     // else{const countCheck = parseFloat(event.target.dataset.count)}
@@ -289,6 +290,18 @@ function init() {
       //  resetTIMER
     }
   }
+  function startTimer(){
+    if (timerRunning === false){
+      timerCount = 0
+      clearInterval(timer)
+      timer = setInterval(() => {
+        timerDisplay.innerHTML = timerCount
+        timerCount +=1
+      }, 1000)
+      timerRunning = true
+  }
+}
+
   resetButton.addEventListener('click', reset)
 }
 window.addEventListener('DOMContentLoaded', init)
