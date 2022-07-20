@@ -36,11 +36,11 @@ button{
 }
 
 .grid button.mine {
-  /* background: red; */
+  background: red;
 }
 
 .grid button.revealed {
-  background: green;
+  /* background: green; */
 }
 
 .everything {
@@ -109,7 +109,7 @@ button#flag {
   font-size: 20px;
 }
 
-.level-top {
+.levelTop {
   font-size: 20px;
 }
 
