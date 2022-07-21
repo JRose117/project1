@@ -7,7 +7,7 @@ function init() {
   const timerDisplay = document.querySelector('.timer')
   const instructionsTop = document.querySelector('.levelTop')
   const instructionsBelow = document.querySelector('.levelBottom')
-  let testArray = []
+
   let width = 8
   let height = 8
   let mines = 10
@@ -123,37 +123,21 @@ function init() {
 
   }
   function checkArea(event) {
-    // if (event===0){
-    //   console.log('zero test line 127')
-    // }
+    // console.log(`line 118 gameRunning - > ${gameRunning}`)
     let x = 0
     let y = 0
     if (event.target) {
-      if (event===0){
-        console.log('zero test line 133')
-      }
-      // console.log(event.target)
       if (!event.target.classList.contains('revealed')) {
-        if (event===0){
-          console.log('zero test line 138')
-        }
         event.target.classList.add('revealed')
         revealed += 1
         x = parseFloat(event.target.dataset.x)
         y = parseFloat(event.target.dataset.y)
       }
     } else {
-      // console.log(cells[event])
+      console.log(`event -> ${event}`)
       if (cells[event].classList.contains('revealed') || (cells[event].classList.contains('mine'))) {
-        if (event===0){
-          console.log('zero test line 1')
-        }
         return
       } else if (event) {
-        if (event===0){
-          console.log('zero test line 154')
-        }
-        // console.log('didnt skip')
         x = parseFloat(cells[event].dataset.x)
         y = parseFloat(cells[event].dataset.y)
         if (!cells[event].classList.contains('revealed')) {
@@ -163,13 +147,13 @@ function init() {
       }
     }
     let count = 0
-    // console.log(`x --> ${x}`)
-    // console.log(`y --> ${y}`)
-    // console.log(`width --> ${width}`)
+    console.log(`x --> ${x}`)
+    console.log(`y --> ${y}`)
+    console.log(`width --> ${width}`)
     const iFromCoordinates = ((width * y) + x)
-    // console.log(`iFromCoordinates -> ${iFromCoordinates}`)
+    console.log(`iFromCoordinates -> ${iFromCoordinates}`)
     const left = x - 1
-    // console.log(`left -> ${left}`)
+    console.log(`left -> ${left}`)
     const right = x + 1
     const top = y - 1
     const below = y + 1
@@ -182,15 +166,16 @@ function init() {
     const belowCoordinate = ((width * below) + x)
     const belowRightCoordinate = ((width * below) + right)
     let coordinatesArray = [topLeftCoordinate, topCoordinate, topRightCoordinate, leftCoordinate, rightCoordinate, belowLeftCoordinate, belowCoordinate, belowRightCoordinate]
-    // console.log(`[topLeftCoordinate -> ${topLeftCoordinate}, topCoordinate -> ${topCoordinate}, topRightCoordinate -> ${topRightCoordinate}, leftCoordinate -> ${leftCoordinate}, rightCoordinate -> ${rightCoordinate}, belowLeftCoordinate -> ${belowLeftCoordinate}, belowCoordinate -> ${belowCoordinate}, belowRightCoordinate -> ${belowRightCoordinate}]`)
+    console.log(`[topLeftCoordinate -> ${topLeftCoordinate}, topCoordinate -> ${topCoordinate}, topRightCoordinate -> ${topRightCoordinate}, leftCoordinate -> ${leftCoordinate}, rightCoordinate -> ${rightCoordinate}, belowLeftCoordinate -> ${belowLeftCoordinate}, belowCoordinate -> ${belowCoordinate}, belowRightCoordinate -> ${belowRightCoordinate}]`)
     coordinatesArray = coordinatesArray.filter(i => cells[i])
-    // console.log(coordinatesArray)
+    console.log(coordinatesArray)
 
 
     // const count = coordinatesArray.reduce((prev,current) => {
     //   return cells[current].classList.contains('mine') ? prev + 1 : prev
     // }, 0)
     // console.log(count)
+    console.log(coordinatesArray.includes(topLeftCoordinate))
     if ((!(top < 0 || left < 0)) && cells[topLeftCoordinate].classList.contains('mine') && coordinatesArray.includes(topLeftCoordinate)) {
       count += 1
     }
@@ -219,16 +204,6 @@ function init() {
     }
     // console.log(`count --> ${count}`)
     // console.log(`event ${event}`)
-    if (event===0){
-        console.log('0 test')
-        console.log(cells[event])
-        console.log(cells[event].classList)
-        console.log(!cells[event].classList.contains('revealed'))
-        if (!cells[event].classList.contains('revealed')) {
-          cells[event].classList.add('revealed')
-          revealed += 1
-        }
-      }
     cells[iFromCoordinates].innerHTML = count
     cells[iFromCoordinates].dataset.count = count
     if (cells[iFromCoordinates].classList.contains('flagged')) {
@@ -236,16 +211,10 @@ function init() {
       minesLeft += 1
       minesLeftHTML.innerHTML = minesLeft
     }
-    // console.log(iFromCoordinates)
-    // testArray.push(iFromCoordinates)
-    // console.log(testArray)
-    // console.log(`cells.length -> ${cells.length}`)
-    // console.log(`cells[iFromCoordinates]->${cells[iFromCoordinates]}`)
-    // console.log(`mines -> ${mines}`)
-    // console.log(`revealed -> ${revealed}`)
-    // console.log(`cells.length-mines === -> ${cells.length-mines === revealed}`)
-    // testArray.sort((a,b)=>a-b)
-    // console.log(testArray)
+    console.log(`cells.length -> ${cells.length}`)
+    console.log(`mines -> ${mines}`)
+    console.log(`revealed -> ${revealed}`)
+    console.log(`cells.length-mines === -> ${cells.length-mines === revealed}`)
     if (cells.length - mines === revealed) {
       console.log('won')
       title.innerHTML = 'YOU WON 🎉'
@@ -333,7 +302,7 @@ function init() {
       }
       cells[i].innerHTML = ''
 
-      // console.log(cells[i])
+      console.log(cells[i])
       //  resetTIMER
     }
   }
