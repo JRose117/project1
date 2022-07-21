@@ -11,7 +11,6 @@ function init() {
   const mines = 10
   let timer
   let timerCount
-  // let level = 1
   let firstClick = 1
   let timerRunning = false
   let minesLeft = mines
@@ -19,32 +18,11 @@ function init() {
   let gameRunning = 3
   let resetTest = false
   let flag = false
-  // let gameWon = 1
   let cellCount
   const cells = []
   let createMineArray = []
   let buttonSelected
   function createGrid() {
-    // gameWon = 1
-    // if (level === 1) {
-    //   width = 8
-    //   height = 8
-    //   mines = 2
-    //   grid.style.height = '560px'
-    //   grid.style.width = '560px'
-    // } else if (level === 2) {
-    //   width = 16
-    //   height = 16
-    //   mines = 40
-    //   grid.style.height = '560px'
-    //   grid.style.width = '560px'
-    // } else {
-    //   width = 30
-    //   height = 16
-    //   mines = 99
-    //   grid.style.height = '480px'
-    //   grid.style.width = '900px'
-    // }
     cellCount = width * height
     minesLeft = mines
     const styleHeight = 100 / height
@@ -56,7 +34,6 @@ function init() {
       const cell = document.createElement('button')
       cell.style.height = `${styleHeight}%`
       cell.style.width = `${styleWidth}%`
-      // cell.innerText = `x:${x},y:${y},i:${i}`
       cell.setAttribute('id', 'tile')
       cell.dataset.x = x
       cell.dataset.y = y
@@ -72,9 +49,7 @@ function init() {
   function createMines(position) {
     cells[position].classList.add('mine')
   }
-
   function runGame(event) {
-    console.log(event.target)
     if (gameRunning === 2) {
       return
     }
@@ -120,7 +95,6 @@ function init() {
         event.target.classList.remove('mine')
         clearTimeout(timer)
         timerRunning = false
-
       } else if (event.target.classList.contains('restart')) {
         return
       } else if (event.target.classList.contains('revealed')) {
@@ -138,18 +112,18 @@ function init() {
     else if (flag === true) {
       flag = false
       flagButtonSelected.style.background = '#2a8a33'
+      flagButtonSelected.style.border = '5px solid #1b7123'
       instructionsTop.innerHTML = 'Pick'
       instructionsBelow.innerHTML = 'Tiles'
     } else {
       flag = true
       flagButtonSelected.style.background = '#94aa5f'
+      flagButtonSelected.style.border = '1px solid #7c9444'
       instructionsTop.innerHTML = 'Place'
       instructionsBelow.innerHTML = 'Flags'
     }
-
   }
   function checkArea(event) {
-
     let x = 0
     let y = 0
     if (event.target) {
@@ -187,8 +161,6 @@ function init() {
     const belowRightCoordinate = ((width * below) + right)
     let coordinatesArray = [topLeftCoordinate, topCoordinate, topRightCoordinate, leftCoordinate, rightCoordinate, belowLeftCoordinate, belowCoordinate, belowRightCoordinate]
     coordinatesArray = coordinatesArray.filter(i => cells[i])
-
-
     if ((!(top < 0 || left < 0)) && cells[topLeftCoordinate].classList.contains('mine') && coordinatesArray.includes(topLeftCoordinate)) {
       count += 1
     }
@@ -248,14 +220,10 @@ function init() {
     if (cells.length - mines === revealed) {
       title.innerHTML = 'YOU WON 🎉'
       gameRunning = 2
-      // gameWon = 2
       clearTimeout(timer)
       timerRunning = false
-      // level = level + 1
     }
     if (count === 0) {
-
-
       if (!(top < 0)) {
         checkArea(topCoordinate)
       }
@@ -310,20 +278,7 @@ function init() {
       cells[i].innerHTML = ''
       cells[i].style.color = 'black'
     }
-    // if (!gameWon === 2){
-    //   level = 1
-    // }
-    // emptyGrid()
-    // createGrid()
-    // buttonSelected.forEach(div => div.addEventListener('click', runGame))
   }
-
-  // function emptyGrid(){
-  //   while(grid.firstChild) {
-  //     grid.removeChild(grid.firstChild)
-  // }
-
-
   function startTimer() {
     if (timerRunning === false) {
       timerCount = 1
