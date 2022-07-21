@@ -2,13 +2,14 @@
   box-sizing: border-box;
   font-family: Electrolize;
   text-align: center;
+  font-size: 20px;
 }
 
 body {
   height: 100vh;
   margin: 0;
   background: #f1ebdd;
-  color: #f5cebf;
+  color: white;
 }
 
 button{
@@ -38,11 +39,11 @@ button{
 .grid button {
   border: 2.2px solid white;
   flex-grow: 1;
-  background: #f5cebf;
+  background: #2a8a33;
 }
 
 .grid button.mine {
-  background: red;
+  /* background: red; */
 }
 
 .grid button.revealed {
@@ -72,7 +73,7 @@ button#flag {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5cebf;
+  background: #2a8a33;
 }
 
 .mines-left {
@@ -82,7 +83,7 @@ button#flag {
   width: 75px;
   height: 75px;
   margin: 20px;
-  background: #815e4c;
+  background: #94aa5f;
   flex-direction: column;
   border: 2px solid white;
 }
@@ -95,7 +96,7 @@ button#flag {
   width: 75px;
   height: 75px;
   margin: 20px;
-  background: #815e4c;
+  background: #94aa5f;
   flex-direction: column;
   border: 2px solid white;
 }
@@ -103,7 +104,7 @@ button#flag {
 .timer {
   height: 75px;
   width: 200px;
-  background: #815e4c;
+  background: #94aa5f;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +113,7 @@ button#flag {
 }
 
 .minesLeftBelow {
-  font-size: 20px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -134,7 +135,7 @@ button#flag {
   height: 75px;
   width: 75px;
   margin: 20px;
-  background: #f5cebf;
+  background: #2a8a33;
 }
 
 .timer{
@@ -154,5 +155,5 @@ button#flag {
 }
 
 #tile.revealed{
-   background : blue;
+  background : #94aa5f;
 }
