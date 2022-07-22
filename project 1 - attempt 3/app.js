@@ -6,9 +6,9 @@ function init() {
   const timerDisplay = document.querySelector('.timer')
   const instructionsTop = document.querySelector('.levelTop')
   const instructionsBelow = document.querySelector('.levelBottom')
-  const width = 8
-  const height = 8
-  const mines = 10
+  let width
+  let height
+  let mines
   let timer
   let timerCount
   let firstClick = 1
@@ -22,7 +22,26 @@ function init() {
   const cells = []
   let createMineArray = []
   let buttonSelected
+  let looping = 1
+  let difficulty = parseFloat(prompt('Type 1 for Easy Mode or 2 for Challenge Mode'))
+  while (looping === 1) {
+    if (difficulty > 2 || difficulty < 1 || Number.isNaN(difficulty) || difficulty % 1 !== 0) {
+      console.log(difficulty)
+      difficulty = parseFloat(prompt('Enter 1 for Easy Mode or 2 for Challenge Mode'))
+    } else {
+      looping = 2
+    }
+  }
   function createGrid() {
+    if (difficulty === 1) {
+      width = 8
+      height = 8
+      mines = 10
+    } else if (difficulty === 2) {
+      width = 16
+      height = 16
+      mines = 40
+    }
     cellCount = width * height
     minesLeft = mines
     const styleHeight = 100 / height
@@ -34,12 +53,16 @@ function init() {
       const cell = document.createElement('button')
       cell.style.height = `${styleHeight}%`
       cell.style.width = `${styleWidth}%`
+      if (difficulty === 2) {
+        cell.style.border = '2px solid #1b7123'
+      }
       cell.setAttribute('id', 'tile')
       cell.dataset.x = x
       cell.dataset.y = y
       cell.setAttribute('value', i)
       cells.push(cell)
       grid.appendChild(cell)
+
     }
     minesLeft = mines
     minesLeftHTML.innerHTML = minesLeft
@@ -79,8 +102,7 @@ function init() {
           minesLeft += 1
           minesLeftHTML.innerHTML = minesLeft
           return
-        }
-        else {
+        } else {
           return
         }
       } else if (flag === true) {
@@ -90,6 +112,11 @@ function init() {
       } else if (event.target.classList.contains('mine')) {
         cells[event.target.value].innerHTML = '💣'
         title.innerHTML = 'YOU LOSE 😢'
+        for (let i = 0; i < cellCount; i++) {
+          if (cells[i].classList.contains('mine')) {
+            cells[i].innerText = '💣'
+          }
+        }
         gameRunning = 2
         event.target.removeAttribute('mine')
         event.target.classList.remove('mine')
@@ -219,6 +246,11 @@ function init() {
     }
     if (cells.length - mines === revealed) {
       title.innerHTML = 'YOU WON 🎉'
+      minesLeft = 0
+      minesLeftHTML.innerHTML = '0'
+      for (let i = 0; i < cellCount; i++) {
+        cells[i].innerText = '🎉'
+      }
       gameRunning = 2
       clearTimeout(timer)
       timerRunning = false
