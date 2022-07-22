@@ -18,7 +18,6 @@ body {
 
 button {
   cursor: pointer;
-  background: #815e4c;
   border: 5px solid #1b7123;
   background: #2a8a33;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
@@ -50,80 +49,36 @@ button {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-.everything {
+.everything, .topOfPage {
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
+}
+.everything{
   flex-direction: row;
 }
 
-.topOfPage {
+.mines-left, .level, button#flag, .timer{
   display: flex;
-  align-content: center;
   justify-content: center;
   align-items: center;
+  width: 75px;
+  height: 75px;
+  margin: 20px;
+  background: #2a8a33;
+  flex-direction: column;
+  border: 5px solid #125f1a;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  Border-radius: 10px;
 }
 
 button#flag {
-  height: 75px;
-  width: 75px;
-  margin: 20px;
   font-size: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #2a8a33;
-  border: 5px solid #1b7123;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  Border-radius: 10px;
-}
-
-button#flag:hover {
-  background: #94aa5f;
-  border: 1px solid #7c9444;
-}
-
-.mines-left {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75px;
-  height: 75px;
-  margin: 20px;
-  background: #2a8a33;
-  flex-direction: column;
-  border: 5px solid #125f1a;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  Border-radius: 10px;
-}
-
-
-.level {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75px;
-  height: 75px;
-  margin: 20px;
-  background: #2a8a33;
-  flex-direction: column;
-  border: 5px solid #125f1a;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  Border-radius: 10px;
 }
 
 .timer {
-  height: 75px;
   width: 200px;
-  background: #2a8a33;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-  border: 5px solid #125f1a;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  Border-radius: 10px;
 }
 
 .minesLeftBelow {
@@ -131,15 +86,11 @@ button#flag:hover {
   text-align: center;
 }
 
-.minesLeftTop {
+.minesLeftTop, .timer {
   font-size: 20px;
 }
 
-.levelTop {
-  font-size: 17px;
-}
-
-.levelBottom {
+.levelTop, .levelBottom {
   font-size: 17px;
 }
 
@@ -153,13 +104,10 @@ button#flag:hover {
   Border-radius: 10px;
 }
 
-.restart button:hover {
+.restart button:hover, #tile.revealed, button#flag:hover {
   background: #94aa5f;
-  border: 1px solid #7c9444;
-}
-
-.timer {
-  font-size: 20px;
+  border: 1.5px solid #7c9444;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .title {
@@ -172,9 +120,4 @@ button#flag:hover {
   align-content: center;
   margin: 20px 70px 0px 0px;
   color: #815e4c;
-}
-
-#tile.revealed {
-  background: #94aa5f;
-  border: 1px solid #7c9444;
 }
