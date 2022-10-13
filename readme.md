@@ -37,7 +37,7 @@ GitHub
 
 ### Planning
 
-Whenever you click a tile on minesweeper, either a mine or a number is revealed. The number revealed tells you how many mines that tile is touching. If the tile you click on isn’t touching any mines, it is blank and the surrounding tiles are revealed, in this project I called these ‘zero’ tiles. The big challenge with this project would be how to manage the tiles which surround ‘zero’ tiles. I was aware of the potential problems that could occur especially when it came to infinite loops between two ‘zero’ tiles next to each other. I decided to streamline my planning by focusing on the big parts of the game, as if this didn’t work, nothing else would. Once I had created an MVP which would manage the ‘zero’ tiles, I would then plan how to add extra features. 
+Whenever you click a tile on Minesweeper, either a mine or a number is revealed. The number revealed tells you how many mines that tile is touching. If the tile you click on isn’t touching any mines, it is blank and the surrounding tiles are revealed, in this project I called these ‘zero’ tiles. The big challenge with this project would be how to manage the tiles which surround ‘zero’ tiles. I was aware of the potential problems that could occur especially when it came to infinite loops between two ‘zero’ tiles next to each other. I decided to streamline my planning by focusing on the big parts of the game, as if this didn’t work, nothing else would. Once I had created an MVP which would manage the ‘zero’ tiles, I would then plan how to add extra features. 
  
 My initial plan to make an MVP was to -> 
  
@@ -73,7 +73,7 @@ ii)checkArea (tile count === 0)
 
 This function created our grid. The grid changed size based on the difficulty level with easy being 8 x 8 and challenge being 16 x 16.
  
-It went through and gave each cell an ‘i’ value (the first cell had an i value of 0 and the last cell had an i value of width * height– 1), an ‘x’ value (its x coordinate) and a ‘y’ value (its y coordinate)
+It went through and gave each cell an ‘i’ value (the first cell had an i value of 0 and the last cell had an i value of width * height– 1), an ‘x’ value (its x coordinate) and a ‘y’ value (its y coordinate).
 
 ![](./ReadMe1/4.png)
 
@@ -95,7 +95,7 @@ The createMines function ran whilst the length of the createMineArray did not eq
  
 #### checkArea
  
-Within checkArea, x and y values are used. This was done to make sure that only tiles next to our selected tiles were checked and not tiles numerically next to our selected tile. Without this, tile 7 (end of row 0 – coordinate 7,0) would check tile 8 (start of row 1 – coordinate 0,1)
+Within checkArea, x and y values are used. This was done to make sure that only tiles next to our selected tiles were checked and not tiles numerically next to our selected tile. Without this, tile 7 (end of row 0 – coordinate 7,0) would check tile 8 (start of row 1 – coordinate 0,1).
  
 ![](./ReadMe1/6.png)
  
@@ -116,10 +116,10 @@ If the count value === 0, the function would rerun, but instead of taking the ev
 
 The challenges were:
  
-- having to add bounds to stop the cells counting the cells numerically next to them, instead of actually next to them.
-- preventing endless loops during the recursion step – this was prevented by adding that it should only check surrounding tiles which had not been revealed.
-- making sure only tiles within the grid were checked – this was managed by checking that only tiles within our filtered array were checked.
-- making sure that tiles touching were checked instead of the numerically touching tiles – this was achieved using coordinates.
+- Having to add bounds to stop the cells counting the cells numerically next to them, instead of actually next to them.
+- Preventing endless loops during the recursion step – this was prevented by adding that it should only check surrounding tiles which had not been revealed.
+- Making sure only tiles within the grid were checked – this was managed by checking that only tiles within our filtered array were checked.
+- Making sure that tiles touching were checked instead of the numerically touching tiles – this was achieved using coordinates.
 
 
 ### Wins
@@ -137,7 +137,7 @@ I added a working timer and flags. I added a restart button, so the player can r
 
 I learnt how to use recursion. This isn’t the most transferable skill but what was helpful was having to learn to be adaptable with my thinking and having to quickly adjust to new ways of applying logic. 
 
-I learnt the importance of a strong plan - I broke down every single step of code I would need to write and thought carefully about how I would tackle every stage of each  problem. This involved writing pseudocode before I started coding.
+I learnt the importance of a strong plan - I broke down every single step of code I would need to write and thought carefully about how I would tackle every stage of each problem. This involved writing pseudocode before I started coding.
 
 I worked out how to turn logical ideas into a working programme.
 
