@@ -14,7 +14,7 @@ https://jrose117.github.io/project1/
 
 ## Overview
 
-!(./ReadMe1/1.gif)
+![](./ReadMe1/1.gif)
 
 
 ### Timeframe & Working Team (Solo/Pair/Group)
@@ -33,7 +33,7 @@ GitHub
 
 ### Brief
 
-!(./ReadMe1/2.png)
+![](./ReadMe1/2.png)
 
 ### Planning
 
@@ -57,7 +57,7 @@ Once this feature works, I could add features to check for win conditions (does 
  
 I drew out the process that every click would trigger, see below:
 
-!(./ReadMe1/3.png)
+![](./ReadMe1/3.png)
 
 ### Build/Code Process
 
@@ -75,7 +75,7 @@ This function created our grid. The grid changed size based on the difficulty le
  
 It went through and gave each cell an ‘i’ value (the first cell had an i value of 0 and the last cell had an i value of width * height– 1), an ‘x’ value (its x coordinate) and a ‘y’ value (its y coordinate)
 
-!(./ReadMe1/4.png)
+![](./ReadMe1/4.png)
 
 ####  runGame
 
@@ -91,25 +91,25 @@ If it was the players first click, it added the current tile to the createMineAr
  
 The createMines function ran whilst the length of the createMineArray did not equal the number of mines + 1. Each time, it chose a random number and checked to see if it is already in createMineArray. If it is not already in the array, it added it to the array and then ran the function on that number. It then added the attribute mine to that randomly chosen cell value. 
  
-!(./ReadMe1/5.png)
+![](./ReadMe1/5.png)
  
 #### checkArea
  
 Within checkArea, x and y values are used. This was done to make sure that only tiles next to our selected tiles were checked and not tiles numerically next to our selected tile. Without this, tile 7 (end of row 0 – coordinate 7,0) would check tile 8 (start of row 1 – coordinate 0,1)
  
-!(./ReadMe1/6.png)
+![](./ReadMe1/6.png)
  
 I then used a filter to make sure only coordinates within our grid were accepted (preventing invalid coordinates such as -1,-1 from being checked.) and then used count to add 1 every time one of the surrounding cells contained a mine. I would add a ‘revealed’ class when the tiles had been checked, and added 1 to the ‘revealed’ count. 
  
 If the count value was greater than zero, the innerHTML would change to the tile’s count value, the check win function would check if number of cells minus revealed tiles = mines and if it did the game would end.
 
-!(./ReadMe1/7.png)
+![](./ReadMe1/7.png)
 
 checkArea -> count value === 0
  
 If the count value === 0, the function would rerun, but instead of taking the event.target.value, it would take the surrounding coordinates as values. If the surrounding coordinate had already been revealed it would skip the process for that tile. This meant it would repeat until every touching ‘zero’ or number had been revealed. 
  
-!(./ReadMe1/8.png)
+![](./ReadMe1/8.png)
  
 ### Challenges
 
